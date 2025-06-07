@@ -97,7 +97,7 @@ export const authAPI = {
         localStorage.removeItem('token');
     },
     getCurrentUser: async () => {
-        const response = await api.get('/auth/me');
+        const response = await api.get('/auth/profile');
         return response.data;
     },
     refreshToken: async () => {
