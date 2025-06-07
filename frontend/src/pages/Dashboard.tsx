@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 interface User {
   id: string;
-  name: string;
-  email: string;
-  type: 'buyer' | 'seller';
+  username: string;
+  fullName: string;
+  role: 'buyer' | 'seller';
   company?: string;
   location: string;
 }
@@ -23,9 +23,9 @@ const Dashboard: React.FC = () => {
   // Datos de ejemplo (esto vendría del backend)
   const user: User = {
     id: '1',
-    name: 'Juan Pérez',
-    email: 'juan@example.com',
-    type: 'seller',
+    username: 'juanperez',
+    fullName: 'Juan Pérez',
+    role: 'seller',
     company: 'Metales Premium S.L.',
     location: 'Madrid, España',
   };
@@ -160,8 +160,8 @@ const Dashboard: React.FC = () => {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
         <p className="text-gray-600">
-          Bienvenido, {user.name}
-          {user.type === 'seller' && ` - ${user.company}`}
+          Bienvenido, {user.fullName}
+          {user.role === 'seller' && ` - ${user.company}`}
         </p>
       </div>
 
