@@ -12,12 +12,12 @@ const { protect, authorize } = require('../middleware/auth.middleware');
 
 // Rutas públicas
 router.get('/', getProducts);
+router.get('/seller/products', protect, getSellerProducts);
 router.get('/:id', getProductById);
 
 // Rutas protegidas
 router.post('/', protect, createProduct);
 router.put('/:id', protect, updateProduct);
 router.delete('/:id', protect, deleteProduct);
-router.get('/seller/products', protect, getSellerProducts);
 
 module.exports = router;
