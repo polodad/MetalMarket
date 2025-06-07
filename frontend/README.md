@@ -49,6 +49,14 @@ yarn start
 
 La aplicación estará disponible en `http://localhost:3000`
 
+## Ejecutar el Backend
+
+Desde la carpeta `backend`, inicia el servidor con:
+
+```bash
+npm start
+```
+
 ## Estructura del Proyecto
 
 ```
