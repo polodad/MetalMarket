@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
+  const { register, error } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,9 +26,19 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí irá la lógica de registro cuando implementemos el backend
-    console.log('Datos del formulario:', formData);
-    navigate('/login');
+    setIsSubmitting(true);
+    try {
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      } as any);
+      navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -35,6 +48,11 @@ const Register: React.FC = () => {
       </h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Correo electrónico
@@ -148,9 +166,10 @@ const Register: React.FC = () => {
 
         <button
           type="submit"
-          className="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          className="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting}
         >
-          Registrarse
+          {isSubmitting ? 'Registrando...' : 'Registrarse'}
         </button>
       </form>
     </div>
