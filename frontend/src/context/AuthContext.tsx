@@ -3,9 +3,9 @@ import { authAPI } from '../services/api';
 import { LoginCredentials, RegisterData } from '../services/api';
 
 interface User {
-    id: string;
-    name: string;
-    email: string;
+    username: string;
+    fullName: string;
+    role: string;
 }
 
 interface AuthContextType {
