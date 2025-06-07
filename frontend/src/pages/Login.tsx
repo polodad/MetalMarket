@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,16 +28,11 @@ const Login: React.FC = () => {
     setError('');
 
     try {
-      const response = await axios.post('/auth/login', formData);
-      
-      // Guardar el token en localStorage
-      localStorage.setItem('token', response.data.data.token);
-      
-      // Redirigir al dashboard
+      await login(formData);
       navigate('/dashboard');
     } catch (error: any) {
       setError(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'Error al iniciar sesión. Por favor, intenta de nuevo.'
       );
     } finally {
@@ -131,4 +127,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login; 
+export default Login;
